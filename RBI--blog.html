@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>RBI--report</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>RBI--blog</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11775,24 +11775,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 align="center">  Restaurant and Coffee House Chains in TORONTO </h1><h2 align="center"> Applied Data Science Capstone by IBM/Coursera (Final Report) </h2><h4 align="center">  </h4><h4 align="center"> Author: Andrei Borodich </h4><h4 align="center"> Date: 12-MAR-2020 </h4><h4 align="center">  </h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">&#182;</a></h2><ul>
-<li><a href="#introduction">Introduction: Business Problem</a></li>
-<li><a href="#data">Data</a></li>
-<li><a href="#methodology">Methodology</a></li>
-<li><a href="#results">Results</a></li>
-<li><a href="#discussion">Discussion</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#references">References</a></li>
-</ul>
-
+<h1 align="center">  Restaurant and Coffee House Chains in TORONTO </h1><h4 align="center"> Author: Andrei Borodich </h4><h4 align="center"> Date: 12-MAR-2020 </h4><h4 align="center">  </h4>
 </div>
 </div>
 </div>
@@ -11836,219 +11819,27 @@ Results of analysis of two groups are merged, the franchise ratio is calculated 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We begin with creating a representative dataset with the Toronto neighborhood geospatial data. 
 The City of Toronto is divided into 6 districts (boroughs). 
-They are Old Toronto (Downtown, Midtown and Islands), York, East York, North York, Scarborough and Etobicoke. 
-In the previous work, "<em>Segmenting and Clustering Neighborhoods in Toronto</em>", we have created 2 dataframes with the boroughs' and neighborhoods' features and stored the datasets into 2 csv-files.</p>
-<p>One stored dataset contains the names of neighborhoods combined under the same postal codes. 
+They are Old Toronto (Downtown, Midtown and Islands), York, East York, North York, Scarborough and Etobicoke.</p>
+<p>Initially, we prepared 2 dataframes with the boroughs' and neighborhoods' features. 
+One dataset contains the names of neighborhoods combined under the same postal codes. 
 It was obtained by making calls to the reliable web-site and fetching the html-table from the Toronto web-page into a pandas dataframe.
-We have used the <code>lxml</code>  Python library to do a web-site scraping.</p>
-<p>Other stored dataset contains the geographical coordinates of combined neighborhoods. 
-It was obtained by retrieving  CanadaPost's geocoded data from the postal codes.
-We have used the <code>geocoder</code> Python library to get the geospatial coordinates of combined neighborhoods linked to the postal codes.</p>
-<p>With the 2 available datasets, we create a combined dataframe of the Toronto neighborhoods including features as name, borough label, latitude, longitude and postal code affiliation. 
+Other dataset contains the geographical coordinates of combined neighborhoods. 
+It was obtained by retrieving  CanadaPost's geocoded data from the postal codes.</p>
+<p>With the 2 available datasets, 
+we create a combined dataframe of the Toronto neighborhoods including features as name, borough label, latitude, longitude and postal code affiliation. 
 From that dataframe we make the two reduced ones for two boroughs, <em>Scarborough</em> and <em>Etobicoke</em>. Those dataframes, <code>scarbo_data</code> and <code>etobi_data</code>, are output below.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">scarbo_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="dataset-image-01.png" align="center"></p>
 
 </div>
 </div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[83]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>PostalCode</th>
-      <th>Borough</th>
-      <th>Neighborhood</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>M1B</td>
-      <td>Scarborough</td>
-      <td>Rouge, Malvern</td>
-      <td>43.806686</td>
-      <td>-79.194353</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>M1C</td>
-      <td>Scarborough</td>
-      <td>Highland Creek, Rouge Hill, Port Union</td>
-      <td>43.784535</td>
-      <td>-79.160497</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>M1E</td>
-      <td>Scarborough</td>
-      <td>Guildwood, Morningside, West Hill</td>
-      <td>43.763573</td>
-      <td>-79.188711</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>M1G</td>
-      <td>Scarborough</td>
-      <td>Woburn</td>
-      <td>43.770992</td>
-      <td>-79.216917</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>M1H</td>
-      <td>Scarborough</td>
-      <td>Cedarbrae</td>
-      <td>43.773136</td>
-      <td>-79.239476</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">etobi_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[84]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>PostalCode</th>
-      <th>Borough</th>
-      <th>Neighborhood</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>M8V</td>
-      <td>Etobicoke</td>
-      <td>Humber Bay Shores, Mimico South, New Toronto</td>
-      <td>43.605647</td>
-      <td>-79.501321</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>M8W</td>
-      <td>Etobicoke</td>
-      <td>Alderwood, Long Branch</td>
-      <td>43.602414</td>
-      <td>-79.543484</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>M8X</td>
-      <td>Etobicoke</td>
-      <td>The Kingsway, Montgomery Road, Old Mill North</td>
-      <td>43.653654</td>
-      <td>-79.506944</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>M8Y</td>
-      <td>Etobicoke</td>
-      <td>Humber Bay, King's Mill Park, Kingsway Park So...</td>
-      <td>43.636258</td>
-      <td>-79.498509</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>M8Z</td>
-      <td>Etobicoke</td>
-      <td>Kingsway Park South West, Mimico NW, The Queen...</td>
-      <td>43.628841</td>
-      <td>-79.520999</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12072,17 +11863,6 @@ From that dataframe we make the two reduced ones for two boroughs, <em>Scarborou
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We also draw the map of each borough and add neigborhood locations onto the map. 
-The maps were made with a rendering library <code>Folium</code>, which is a highly acknowledged visualization library. The Folium maps are easy to navigate and fast to respond zooming. 
-The nominal geospatial coordinates (latitude and longitude) of Scarborough, ON and Etobicoke, ON were obtained with the geolocator API of the geolocation service <code>Nominatim</code> from the GeoPy library.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Then, we proceed with creating datasets of the <strong>neighborhood most popular venues</strong>, one for Scarborough and other for Etobicoke.
 We explore neighborhoods in a given borough utilizing the <code>Foursquare</code> API. By making calls we get the top popular venues, with the limit of 100,  in all categories, within a radius of 1250 meters around every neighborhood. As we empirically determined it is an optimal radius for a bigger circular coverage but fewer venue overlap in case of the "low venue density" neighborhoods of Toronto. 
 We collect results and extracts the venue features from the json-structure. 
@@ -12094,241 +11874,15 @@ We visualize the venue locations on the borough's maps.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">scarbo_venues</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="dataset-image-02a.png" align="center">
+<img src="dataset-image-02b.png" align="center"></p>
 
 </div>
 </div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[85]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Neighborhood</th>
-      <th>Neighborhood Latitude</th>
-      <th>Neighborhood Longitude</th>
-      <th>Venue</th>
-      <th>Venue id</th>
-      <th>Venue Latitude</th>
-      <th>Venue Longitude</th>
-      <th>Venue Category</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Rouge, Malvern</td>
-      <td>43.806686</td>
-      <td>-79.194353</td>
-      <td>Wendy's</td>
-      <td>579a91b3498e9bd833afa78a</td>
-      <td>43.802008</td>
-      <td>-79.198080</td>
-      <td>Fast Food Restaurant</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Rouge, Malvern</td>
-      <td>43.806686</td>
-      <td>-79.194353</td>
-      <td>Harvey's</td>
-      <td>4b6718c2f964a5203f3a2be3</td>
-      <td>43.800020</td>
-      <td>-79.198307</td>
-      <td>Restaurant</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Rouge, Malvern</td>
-      <td>43.806686</td>
-      <td>-79.194353</td>
-      <td>Wendy's</td>
-      <td>4bb6b9446edc76b0d771311c</td>
-      <td>43.807448</td>
-      <td>-79.199056</td>
-      <td>Fast Food Restaurant</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Rouge, Malvern</td>
-      <td>43.806686</td>
-      <td>-79.194353</td>
-      <td>Caribbean Wave</td>
-      <td>4b914562f964a520d4ae33e3</td>
-      <td>43.798558</td>
-      <td>-79.195777</td>
-      <td>Caribbean Restaurant</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Rouge, Malvern</td>
-      <td>43.806686</td>
-      <td>-79.194353</td>
-      <td>Staples Morningside</td>
-      <td>4bcb612d3740b713f0606265</td>
-      <td>43.800285</td>
-      <td>-79.196607</td>
-      <td>Paper / Office Supplies Store</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">etobi_venues</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[86]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Neighborhood</th>
-      <th>Neighborhood Latitude</th>
-      <th>Neighborhood Longitude</th>
-      <th>Venue</th>
-      <th>Venue id</th>
-      <th>Venue Latitude</th>
-      <th>Venue Longitude</th>
-      <th>Venue Category</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Humber Bay Shores, Mimico South, New Toronto</td>
-      <td>43.605647</td>
-      <td>-79.501321</td>
-      <td>LCBO</td>
-      <td>4b119977f964a520488023e3</td>
-      <td>43.602281</td>
-      <td>-79.499302</td>
-      <td>Liquor Store</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Humber Bay Shores, Mimico South, New Toronto</td>
-      <td>43.605647</td>
-      <td>-79.501321</td>
-      <td>Huevos Gourmet</td>
-      <td>5395d784498e085ff3c18198</td>
-      <td>43.601188</td>
-      <td>-79.503717</td>
-      <td>Mexican Restaurant</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Humber Bay Shores, Mimico South, New Toronto</td>
-      <td>43.605647</td>
-      <td>-79.501321</td>
-      <td>Sweet Olenka's</td>
-      <td>4c081867ffb8c9b6d7b66761</td>
-      <td>43.601099</td>
-      <td>-79.500325</td>
-      <td>Dessert Shop</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Humber Bay Shores, Mimico South, New Toronto</td>
-      <td>43.605647</td>
-      <td>-79.501321</td>
-      <td>Kitchen on 6th</td>
-      <td>571cdf3e38faaa76e74049d7</td>
-      <td>43.601396</td>
-      <td>-79.504563</td>
-      <td>Breakfast Spot</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Humber Bay Shores, Mimico South, New Toronto</td>
-      <td>43.605647</td>
-      <td>-79.501321</td>
-      <td>Cellar Door Restaurant</td>
-      <td>53938d4c498ea919cfa0117f</td>
-      <td>43.600221</td>
-      <td>-79.507638</td>
-      <td>Italian Restaurant</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12359,243 +11913,15 @@ After extracting venue features from the json-structure and discarding the venue
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df_FFRs</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> 
-<span class="c1"># df_CSs.head(5) </span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="dataset-image-03a.png" align="center">
+<img src="dataset-image-03b.png" align="center"></p>
 
 </div>
 </div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[87]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>nei</th>
-      <th>venue_id</th>
-      <th>venue_name</th>
-      <th>venue_lat</th>
-      <th>venue_lon</th>
-      <th>venue_addr</th>
-      <th>cate_id</th>
-      <th>cate_name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>579a91b3498e9bd833afa78a</td>
-      <td>Wendy's</td>
-      <td>43.802008</td>
-      <td>-79.198080</td>
-      <td>8129 Sheppard Avenue, Scarborough ON M1B 6A3</td>
-      <td>4bf58dd8d48988d16e941735</td>
-      <td>fast food restaurant</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>4bb6b9446edc76b0d771311c</td>
-      <td>Wendy's</td>
-      <td>43.807448</td>
-      <td>-79.199056</td>
-      <td>Toronto ON</td>
-      <td>4bf58dd8d48988d16e941735</td>
-      <td>fast food restaurant</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>4b89abadf964a520ae4a32e3</td>
-      <td>Quiznos</td>
-      <td>43.798773</td>
-      <td>-79.196556</td>
-      <td>875 Milner Ave (at Morningside Ave), Toronto O...</td>
-      <td>4bf58dd8d48988d16e941735</td>
-      <td>fast food restaurant</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>4c3660c80a71c9b6d30f3dc9</td>
-      <td>McDonald's</td>
-      <td>43.798261</td>
-      <td>-79.201449</td>
-      <td>785 Milner Avenue (Walmart), Scarborough ON M1...</td>
-      <td>4bf58dd8d48988d16e941735</td>
-      <td>fast food restaurant</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>3</td>
-      <td>4b9023e9f964a5200e7833e3</td>
-      <td>McDonald's</td>
-      <td>43.768334</td>
-      <td>-79.188288</td>
-      <td>4435 Kingston Rd. (Lawrence Ave E), Scarboroug...</td>
-      <td>4bf58dd8d48988d16e941735</td>
-      <td>fast food restaurant</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># df_FFRe.head(5) </span>
-<span class="n">df_CSe</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[88]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>nei</th>
-      <th>venue_id</th>
-      <th>venue_name</th>
-      <th>venue_lat</th>
-      <th>venue_lon</th>
-      <th>venue_addr</th>
-      <th>cate_id</th>
-      <th>cate_name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>5086d512e4b0aafd9871629f</td>
-      <td>Tim Hortons</td>
-      <td>43.598932</td>
-      <td>-79.511990</td>
-      <td>3089 Lakeshore Blvd (Lakeshore), Etobicoke ON ...</td>
-      <td>4bf58dd8d48988d1e0931735</td>
-      <td>coffee shop</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>4f0c86b7e4b0d563f7dd6e9c</td>
-      <td>Coffee Time</td>
-      <td>43.602284</td>
-      <td>-79.499857</td>
-      <td>2786 Lake Shore Blvd W (at 2nd St), Toronto ON</td>
-      <td>4bf58dd8d48988d1e0931735</td>
-      <td>coffee shop</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>4be6c47a2457a593101cad15</td>
-      <td>Big Guy's Little Coffee Shop</td>
-      <td>43.601359</td>
-      <td>-79.502480</td>
-      <td>2861 Lakeshore Blvd W, Toronto ON</td>
-      <td>4bf58dd8d48988d1e0931735</td>
-      <td>coffee shop</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2</td>
-      <td>52abc3b011d279cc571a9e77</td>
-      <td>Starbucks</td>
-      <td>43.594427</td>
-      <td>-79.533384</td>
-      <td>3559 Lake Shore Blvd W (Thirty Third St), Toro...</td>
-      <td>4bf58dd8d48988d1e0931735</td>
-      <td>coffee shop</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2</td>
-      <td>55e4f8ee498e1696f68060e8</td>
-      <td>Tim Hortons</td>
-      <td>43.592881</td>
-      <td>-79.539087</td>
-      <td>3719 Lakeshore Blvd West, Etobicoke ON M8W 1P8</td>
-      <td>4bf58dd8d48988d1e0931735</td>
-      <td>coffee shop</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12627,7 +11953,7 @@ After extracting venue features from the json-structure and discarding the venue
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3>(A). All Venue Categories &mdash; Cluster Analysis</h3>
+<h3>All Venue Categories &mdash; Cluster Analysis</h3>
 <p>We aim to identify the similar neighborhoods, based on similarity of their venue features.
 In other words, we are going to apply  some clustering method to our two neighborhood--venue datasets, Scarborough and Etobicoke.
 Clustering algorithms are unsupervised process (learning) to group unlabeled data, based on the similarity of their features.
@@ -12653,19 +11979,7 @@ Hence, <em>clusters which are farther apart and less dispersed will result in a 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3>(B). Top 10 Venue Categories &mdash; Correlation Analysis</h3>
-<p>We aim to check the correlations between neighborhoods' venue category sets.
-The reduced dataframe has been prepared, for each borough, to include only top 10 popular venue categories.
-We calculate the <strong>Phi Coefficient</strong> and <strong>Cramer's V Correlation</strong>. As known from mathematical statistics, <em>Phi</em> is a measure for the strength of an association between two categorical variables in a 2 × 2 contingency table. <em>Cramer's V</em> is an alternative to Phi in contingency tables bigger than 2 × 2 tabulation.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3>(C). Targeted Venue Categories &mdash; Frequency Distribution</h3>
+<h3>Targeted Venue Categories &mdash; Frequency Distribution</h3>
 <p>We aim to quantify the distributions of targeted venue categories. 
 Frequency distributions are mostly used for summarizing categorical variables.
 A <strong>frequency distribution</strong> is a variable description by a pair of corresponding sets, one is all distinct values in the variable and other is their occurrence numbers (frequencies).
@@ -12687,7 +12001,7 @@ a histogram (showing frequencies for intervals of values).</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="(A).-All-Venue-Categories">(A). All Venue Categories<a class="anchor-link" href="#(A).-All-Venue-Categories">&#182;</a></h3>
+<h3 id="All-Venue-Categories">All Venue Categories<a class="anchor-link" href="#All-Venue-Categories">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12698,13 +12012,11 @@ a histogram (showing frequencies for intervals of values).</p>
 <p>We run  <code>MiniBatchKMeans</code> application from the Python machine-learning library <code>scikit-learn</code>. The number of clusters for each borough dataset has been selected using the "elbow method" and
 its optimal value of 6 clusters has been confirmed in further calculations for both <em>Scarborough</em> and <em>Etobicoke</em>.</p>
 <p>First, the K-Means model segmented the <strong>Scarborough</strong> neighborhoods into 
-a 9 member cluster (labeled by 0), a 4 member cluster (labeled by 2) and 
-four sole clusters (labeled by 1, 3, 4 and 5). 
+a 9 member cluster, a 4 member cluster and four sole clusters. 
 The dataset representing <em>527 venues</em> that belong to <em>132 different venue categories</em> 
 has been fitted to the model.</p>
 <p>Second, the K-Means model clustered the <strong>Etobicoke</strong> neighborhoods into 
-a 5 member cluster (labeled by 5), a 2 member cluster (labeled by 2)  and 
-four sole clusters (labeled by 0, 1, 3 and 4).
+a 5 member cluster, a 2 member cluster and four sole clusters. 
 The dataset representing <em>363 venues</em> that belong to <em>110 different venue categories</em> 
 has been fitted to the model.</p>
 <p>The clustering model of the <em>Scarborough</em> data is quantified by the numbers of 
@@ -12721,7 +12033,7 @@ This is applied to both boroughs.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The <strong>Scarborough</strong> clustered neighborhoods are shown in the map (6 clusters). Further, we examine the clusters using the top 10 venue categories in each neighborhood. The dataframe <code>neighborhoods_venues_sorted</code> is placed in the subsection (B).</p>
+<p>The <strong>Scarborough</strong> clustered neighborhoods are shown in the map (6 clusters). Further, we examine the clusters using the top 10 venue categories in each neighborhood.</p>
 
 </div>
 </div>
@@ -12770,7 +12082,7 @@ Then, the recreational <strong>clusters #0</strong> demonstrates "the upper midd
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The <strong>Etobicoke</strong> clustered neighborhoods are shown in the map below. Further, we examine the clusters using the top 10 venue categories in each neighborhood. The dataframe <code>neighborhoods_venues_sorted</code> is placed in the subsection (B).</p>
+<p>The <strong>Etobicoke</strong> clustered neighborhoods are shown in the map below. Further, we examine the clusters using the top 10 venue categories in each neighborhood.</p>
 
 </div>
 </div>
@@ -12814,638 +12126,7 @@ FFRs and Pizza Places are popular as well.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="(B).-Top-10-Venue-Categories">(B). Top 10 Venue Categories<a class="anchor-link" href="#(B).-Top-10-Venue-Categories">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We examine the top 10 venue categories in each neighborhood in <em>Scarborough</em> 
-and describe borough's peculiar attributes. 
-The <em>Scarborough</em> dataset is placed below.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[102]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># make a dataframe with top popular venues sorted in decending order, SCARBO</span>
-<span class="n">neighborhoods_venues_sorted</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[102]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Neighborhood</th>
-      <th>1st Most Common Venue</th>
-      <th>2nd Most Common Venue</th>
-      <th>3rd Most Common Venue</th>
-      <th>4th Most Common Venue</th>
-      <th>5th Most Common Venue</th>
-      <th>6th Most Common Venue</th>
-      <th>7th Most Common Venue</th>
-      <th>8th Most Common Venue</th>
-      <th>9th Most Common Venue</th>
-      <th>10th Most Common Venue</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Agincourt</td>
-      <td>Chinese Restaurant</td>
-      <td>Shopping Mall</td>
-      <td>Park</td>
-      <td>Pizza Place</td>
-      <td>Bakery</td>
-      <td>Caribbean Restaurant</td>
-      <td>Filipino Restaurant</td>
-      <td>Bubble Tea Shop</td>
-      <td>Noodle House</td>
-      <td>Pool Hall</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Agincourt North, L'Amoreaux East, Milliken, St...</td>
-      <td>Chinese Restaurant</td>
-      <td>Bubble Tea Shop</td>
-      <td>Dessert Shop</td>
-      <td>Korean Restaurant</td>
-      <td>Bakery</td>
-      <td>Pizza Place</td>
-      <td>Coffee Shop</td>
-      <td>Park</td>
-      <td>Malay Restaurant</td>
-      <td>Dumpling Restaurant</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Birch Cliff, Cliffside West</td>
-      <td>Park</td>
-      <td>Skating Rink</td>
-      <td>Ice Cream Shop</td>
-      <td>Café</td>
-      <td>Restaurant</td>
-      <td>Chinese Restaurant</td>
-      <td>Thai Restaurant</td>
-      <td>General Entertainment</td>
-      <td>Diner</td>
-      <td>Dessert Shop</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Cedarbrae</td>
-      <td>Coffee Shop</td>
-      <td>Bakery</td>
-      <td>Gas Station</td>
-      <td>Pharmacy</td>
-      <td>Sandwich Place</td>
-      <td>Indian Restaurant</td>
-      <td>Wings Joint</td>
-      <td>Lounge</td>
-      <td>Chinese Restaurant</td>
-      <td>Music Store</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Clairlea, Golden Mile, Oakridge</td>
-      <td>Intersection</td>
-      <td>Park</td>
-      <td>Coffee Shop</td>
-      <td>Bus Station</td>
-      <td>Bakery</td>
-      <td>Bus Line</td>
-      <td>Grocery Store</td>
-      <td>Pharmacy</td>
-      <td>Fast Food Restaurant</td>
-      <td>Filipino Restaurant</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Clarks Corners, Sullivan, Tam O'Shanter</td>
-      <td>Fast Food Restaurant</td>
-      <td>Coffee Shop</td>
-      <td>Park</td>
-      <td>Intersection</td>
-      <td>Sandwich Place</td>
-      <td>Vietnamese Restaurant</td>
-      <td>Shopping Mall</td>
-      <td>Deli / Bodega</td>
-      <td>Caribbean Restaurant</td>
-      <td>Pharmacy</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Cliffcrest, Cliffside, Scarborough Village West</td>
-      <td>Park</td>
-      <td>Harbor / Marina</td>
-      <td>Ice Cream Shop</td>
-      <td>Discount Store</td>
-      <td>Pizza Place</td>
-      <td>Beach</td>
-      <td>Burger Joint</td>
-      <td>Hardware Store</td>
-      <td>Fast Food Restaurant</td>
-      <td>Liquor Store</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Dorset Park, Scarborough Town Centre, Wexford ...</td>
-      <td>Coffee Shop</td>
-      <td>Restaurant</td>
-      <td>Fast Food Restaurant</td>
-      <td>Indian Restaurant</td>
-      <td>Park</td>
-      <td>Electronics Store</td>
-      <td>Pizza Place</td>
-      <td>Asian Restaurant</td>
-      <td>Furniture / Home Store</td>
-      <td>Pharmacy</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>East Birchmount Park, Ionview, Kennedy Park</td>
-      <td>Coffee Shop</td>
-      <td>Chinese Restaurant</td>
-      <td>Discount Store</td>
-      <td>Grocery Store</td>
-      <td>Fast Food Restaurant</td>
-      <td>Bus Line</td>
-      <td>Burger Joint</td>
-      <td>Sporting Goods Shop</td>
-      <td>Pharmacy</td>
-      <td>Pizza Place</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Guildwood, Morningside, West Hill</td>
-      <td>Pizza Place</td>
-      <td>Breakfast Spot</td>
-      <td>Coffee Shop</td>
-      <td>Fast Food Restaurant</td>
-      <td>Pharmacy</td>
-      <td>Shopping Mall</td>
-      <td>Sandwich Place</td>
-      <td>Restaurant</td>
-      <td>Juice Bar</td>
-      <td>Gym / Fitness Center</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>Highland Creek, Rouge Hill, Port Union</td>
-      <td>Burger Joint</td>
-      <td>Italian Restaurant</td>
-      <td>Neighbor_hood</td>
-      <td>Playground</td>
-      <td>Breakfast Spot</td>
-      <td>Park</td>
-      <td>Gym / Fitness Center</td>
-      <td>Greek Restaurant</td>
-      <td>Golf Course</td>
-      <td>Deli / Bodega</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>L'Amoreaux West</td>
-      <td>Chinese Restaurant</td>
-      <td>Pizza Place</td>
-      <td>Coffee Shop</td>
-      <td>Fast Food Restaurant</td>
-      <td>Pharmacy</td>
-      <td>Sandwich Place</td>
-      <td>Bakery</td>
-      <td>Intersection</td>
-      <td>Pool</td>
-      <td>Discount Store</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>Maryvale, Wexford</td>
-      <td>Middle Eastern Restaurant</td>
-      <td>Pizza Place</td>
-      <td>Grocery Store</td>
-      <td>Intersection</td>
-      <td>Hookah Bar</td>
-      <td>Bus Station</td>
-      <td>Chinese Restaurant</td>
-      <td>Sandwich Place</td>
-      <td>Breakfast Spot</td>
-      <td>Fish Market</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>Rouge, Malvern</td>
-      <td>Fast Food Restaurant</td>
-      <td>Trail</td>
-      <td>Zoo Exhibit</td>
-      <td>Restaurant</td>
-      <td>Arts &amp; Crafts Store</td>
-      <td>Big Box Store</td>
-      <td>Business Service</td>
-      <td>Caribbean Restaurant</td>
-      <td>Chinese Restaurant</td>
-      <td>Coffee Shop</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>Scarborough Village</td>
-      <td>Sandwich Place</td>
-      <td>Pharmacy</td>
-      <td>Ice Cream Shop</td>
-      <td>Beer Store</td>
-      <td>Fish &amp; Chips Shop</td>
-      <td>Liquor Store</td>
-      <td>Bus Station</td>
-      <td>Pizza Place</td>
-      <td>Breakfast Spot</td>
-      <td>Bowling Alley</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>Upper Rouge</td>
-      <td>Donut Shop</td>
-      <td>Zoo Exhibit</td>
-      <td>Flea Market</td>
-      <td>Deli / Bodega</td>
-      <td>Department Store</td>
-      <td>Dessert Shop</td>
-      <td>Diner</td>
-      <td>Discount Store</td>
-      <td>Dumpling Restaurant</td>
-      <td>Electronics Store</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>Woburn</td>
-      <td>Park</td>
-      <td>Department Store</td>
-      <td>Coffee Shop</td>
-      <td>Pizza Place</td>
-      <td>Indian Restaurant</td>
-      <td>Supermarket</td>
-      <td>Pharmacy</td>
-      <td>Chinese Restaurant</td>
-      <td>Discount Store</td>
-      <td>Sandwich Place</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In Scarborough, <em>Coffee Shop and Chinese Restaurant and Park</em> 
-take the first two positions in the list of popularity in the majority of neighborhoods. 
-<em>This is a pattern pertinent specifically for this district</em>.</p>
-<p>Also, inspecting the dataframe we observe that FFR category shows a firm popularity in neighborhoods.</p>
-<p>If we drop for a moment the recreational category (Park) and then look at the first three positions, 
-we notice that Chinese Restaurants compete mostly to FFRs. The popularity of Chinese Restaurants is rather high, and this is <em>a limiting factor</em> to open a new FFR franchisee here.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Next, we examine the top 10 venue categories in each neighborhood in <em>Etobicoke</em> 
-and describe borough's peculiar attributes. 
-The <em>Etobicoke</em> dataset is placed below.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[159]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># make a dataframe with top popular venues sorted in decending order, ETOBI</span>
-<span class="n">neighborhoods_venues_sorted</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[159]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Neighborhood</th>
-      <th>1st Most Common Venue</th>
-      <th>2nd Most Common Venue</th>
-      <th>3rd Most Common Venue</th>
-      <th>4th Most Common Venue</th>
-      <th>5th Most Common Venue</th>
-      <th>6th Most Common Venue</th>
-      <th>7th Most Common Venue</th>
-      <th>8th Most Common Venue</th>
-      <th>9th Most Common Venue</th>
-      <th>10th Most Common Venue</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Albion Gardens, Beaumond Heights, Humbergate, ...</td>
-      <td>Pizza Place</td>
-      <td>Grocery Store</td>
-      <td>Bus Line</td>
-      <td>Indian Restaurant</td>
-      <td>Fried Chicken Joint</td>
-      <td>Fast Food Restaurant</td>
-      <td>Park</td>
-      <td>Pharmacy</td>
-      <td>Gym Pool</td>
-      <td>Sandwich Place</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Alderwood, Long Branch</td>
-      <td>Pharmacy</td>
-      <td>Coffee Shop</td>
-      <td>Park</td>
-      <td>Pizza Place</td>
-      <td>Discount Store</td>
-      <td>Grocery Store</td>
-      <td>Light Rail Station</td>
-      <td>Convenience Store</td>
-      <td>Gas Station</td>
-      <td>Pub</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Bloordale Gardens, Eringate, Markland Wood, Ol...</td>
-      <td>Convenience Store</td>
-      <td>Pizza Place</td>
-      <td>Park</td>
-      <td>Café</td>
-      <td>Coffee Shop</td>
-      <td>Pet Store</td>
-      <td>Baseball Field</td>
-      <td>Liquor Store</td>
-      <td>Fish &amp; Chips Shop</td>
-      <td>Shopping Mall</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Cloverdale, Islington, Martin Grove, Princess ...</td>
-      <td>Park</td>
-      <td>Pizza Place</td>
-      <td>Hotel</td>
-      <td>Pharmacy</td>
-      <td>Gym</td>
-      <td>Grocery Store</td>
-      <td>Bank</td>
-      <td>Theater</td>
-      <td>Fish &amp; Chips Shop</td>
-      <td>Breakfast Spot</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Humber Bay Shores, Mimico South, New Toronto</td>
-      <td>Park</td>
-      <td>Pharmacy</td>
-      <td>Café</td>
-      <td>Indian Restaurant</td>
-      <td>Italian Restaurant</td>
-      <td>Fried Chicken Joint</td>
-      <td>Liquor Store</td>
-      <td>Fast Food Restaurant</td>
-      <td>Mexican Restaurant</td>
-      <td>Dessert Shop</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Humber Bay, King's Mill Park, Kingsway Park So...</td>
-      <td>Coffee Shop</td>
-      <td>Italian Restaurant</td>
-      <td>Park</td>
-      <td>Sushi Restaurant</td>
-      <td>Fast Food Restaurant</td>
-      <td>Harbor / Marina</td>
-      <td>Sandwich Place</td>
-      <td>Ice Cream Shop</td>
-      <td>Pizza Place</td>
-      <td>Thai Restaurant</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Kingsview Village, Martin Grove Gardens, Richv...</td>
-      <td>Pharmacy</td>
-      <td>Liquor Store</td>
-      <td>Bank</td>
-      <td>Pizza Place</td>
-      <td>Beer Store</td>
-      <td>Coffee Shop</td>
-      <td>Sandwich Place</td>
-      <td>Shopping Mall</td>
-      <td>Café</td>
-      <td>Gas Station</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Kingsway Park South West, Mimico NW, The Queen...</td>
-      <td>Restaurant</td>
-      <td>Coffee Shop</td>
-      <td>Grocery Store</td>
-      <td>Burrito Place</td>
-      <td>Sushi Restaurant</td>
-      <td>Gym</td>
-      <td>Gym / Fitness Center</td>
-      <td>Italian Restaurant</td>
-      <td>Convenience Store</td>
-      <td>Park</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Northwest</td>
-      <td>Coffee Shop</td>
-      <td>Hotel</td>
-      <td>Mediterranean Restaurant</td>
-      <td>Drugstore</td>
-      <td>Rental Car Location</td>
-      <td>Restaurant</td>
-      <td>Dog Run</td>
-      <td>Gym</td>
-      <td>Greek Restaurant</td>
-      <td>Fish &amp; Chips Shop</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>The Kingsway, Montgomery Road, Old Mill North</td>
-      <td>Park</td>
-      <td>Coffee Shop</td>
-      <td>French Restaurant</td>
-      <td>Sushi Restaurant</td>
-      <td>Burger Joint</td>
-      <td>Breakfast Spot</td>
-      <td>Spa</td>
-      <td>Liquor Store</td>
-      <td>Pizza Place</td>
-      <td>Pub</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>Westmount</td>
-      <td>Coffee Shop</td>
-      <td>Pizza Place</td>
-      <td>Gas Station</td>
-      <td>Pharmacy</td>
-      <td>Middle Eastern Restaurant</td>
-      <td>Restaurant</td>
-      <td>Plaza</td>
-      <td>Park</td>
-      <td>Diner</td>
-      <td>Discount Store</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In Etobicoke, <em>Coffee Shop and Pizza Place and Park</em> 
-take the first two positions in the list of popularity in the majority of neighborhoods. 
-<em>This is a pattern pertinent specifically for this district</em>.</p>
-<p>Also, inspecting the dataframe we observe that FFR category doesn't show a strong popularity in neighborhoods.</p>
-<p>Again, when we drop for a moment the recreational category (Park) and then look at the first three positions, 
-we notice that Pizza Places compete with random venues as Cafe, Ethnic Restaurant, FFR, others. 
-This is <em>a favorable sign</em> to open a new FFR franchisee here.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Next, we look at the correlations between the 1st, 2nd, ..., 10th venue categories in different neighborhoods.
-The graphical presentations of <strong>Cramer's V</strong> matrix are placed below for both districts.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<table>
-<thead><tr>
-<th>Cramer's V, &nbsp; &nbsp;  Scarbo_Dataset</th>
-<th>Cramer's V, &nbsp; &nbsp;  Etobi_Dataset</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img src="CramersV--scarbo.png" width="400" align="center"></td>
-<td><img src="CramersV--etobi.png" width="400" align="center"></td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Looking at the graphics we can notice the following.</p>
-<ol>
-<li><p>The 1st and 2nd popular venue categories in all neighborhoods don't correlate, e.g. they are independent observables. <strong>This issue verifies implementation of the venue_1 to venue_2 ratio (for instance, franchise ratio) to making predictions</strong>.</p>
-</li>
-<li><p>In the Scarborough dataset, the 3rd, 4th and 5th category features are strongly correlated. In the Etocoke dataset, a strongly correlated group consists of the 8th, 9th and 10th features.</p>
-</li>
-</ol>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="(C).-Targeted-Venue-Categories">(C). Targeted Venue Categories<a class="anchor-link" href="#(C).-Targeted-Venue-Categories">&#182;</a></h3>
+<h3 id="Targeted-Venue-Categories">Targeted Venue Categories<a class="anchor-link" href="#Targeted-Venue-Categories">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13633,26 +12314,6 @@ Hence, taking into account the neigborhood similarity, the recommended the follo
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We end the current section with discussion of limitations of this study:</p>
-<ol>
-<li><p>We have not pursued the aim to cover most borough territory or account for all existing venues. 
-Instead, we decided to collect representative venue statistics withing territorial circles 
-centered at the neighborhood centers.</p>
-</li>
-<li><p>Density population, age distribution and other featured parameters 
-that portrait an average customer were not considered. 
-Our approach is based on the customer graded venue popularity data 
-and take into account such properties as neighborhood similarity and neighborhood affinity towards CSs and FFRs.</p>
-</li>
-</ol>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Conclusion-">Conclusion <a name="conclusion" /><a class="anchor-link" href="#Conclusion-">&#182;</a></h2>
 </div>
 </div>
@@ -13703,18 +12364,10 @@ are the potential locations to run new FFRs.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>City of Toronto &mdash; Neighbourhood Profiles <br>
-<a href="https://www.toronto.ca/city-government/data-research-maps/neighbourhoods-communities/neighbourhood-profiles/">https://www.toronto.ca/city-government/data-research-maps/neighbourhoods-communities/neighbourhood-profiles/</a></p>
-<p>Geocode USA and Canada <br>
-<a href="http://geocoder.ca/">http://geocoder.ca/</a></p>
-<p>Places Data by Foursquare <br>
-<a href="https://enterprise.foursquare.com/products/places">https://enterprise.foursquare.com/products/places</a></p>
-<p>k-means algorithm  <br>
-<a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html</a></p>
-<p>Cramer's Coefficient  <br>
-<a href="http://mlwiki.org/index.php/Cramer%27s_Coefficient">http://mlwiki.org/index.php/Cramer%27s_Coefficient</a></p>
-<p>Pandas Profiling  <br>
-<a href="https://pandas-profiling.github.io/pandas-profiling/docs/">https://pandas-profiling.github.io/pandas-profiling/docs/</a></p>
+<p>[1] <a href="https://www.toronto.ca/city-government/data-research-maps/neighbourhoods-communities/neighbourhood-profiles/">City of Toronto &mdash; Neighbourhood Profiles</a></p>
+<p>[2] <a href="http://geocoder.ca/">Geocode USA and Canada</a></p>
+<p>[3] <a href="https://enterprise.foursquare.com/products/places">Places Data by Foursquare</a></p>
+<p>[4] <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">k-means algorithm</a></p>
 
 </div>
 </div>
